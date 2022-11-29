@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="Widget.Theme.Investic.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
+        <item name="exampleColor">@color/light_blue_400</item>
+    </style>
+
+    <style name="Button.Green" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">#55dc12</item>
+    </style>
+</resources>

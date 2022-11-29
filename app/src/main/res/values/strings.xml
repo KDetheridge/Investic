@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Investic</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+        <string name="action_profile">Profile</string>
+    <string name="username">Kieran</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_confirm">Confirm Password</string>
+    <string name="prompt_investment_amount">1000.00</string>
+    <string name="prompt_investment_duration">18</string>
+    <string name="prompt_investment_risk">1 - Very Low Risk, 5 - Very High Risk</string>
+    <string name="invalid_number">Invalid Number! Please enter a number.</string>
+    <string name="invalid_number_between_1_5">Invalid Number! Please enter a number between 1 and 5.</string>
+
+    <string-array name="investment_risk_levels">
+        <item>1 - Very Low Risk</item>
+        <item>2 - Low Risk</item>
+        <item>3 - Average Risk</item>
+        <item>4 - Moderate Risk</item>
+        <item>4 - High Risk</item>
+    </string-array>
+    <string name="profile_update_success">Successfully updated your profile.</string>
+
+    <string name="profile_update_fail">Failed to updated your profile. Please try again later or contact support if the problem persists.</string>
+    <string name="prompt_investment_scrutiny">1 Very Basic, 5 - Very In-Depth</string>
+
+
+    <string name="prompt_first_name">First Name</string>
+    <string name="prompt_last_name">Last Name</string>
+
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_submit">Submit</string>
+    <string name="welcome">"Welcome, "</string>
+    <string name="invalid_email">You must enter a valid email address!</string>
+    <string name="existing_email">Account with this email address already exists!</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be > 5 characters</string>
+    <string name="invalid_password_confirm">Passwords must match.</string>
+    <string name="invalid_name">You must enter your name.</string>
+    <string name="login_failed">"Login failed. Please check your credentials and try again."</string>
+    <string name="register_failed">"Registration failed. Please check your credentials and try again."</string>
+</resources>
