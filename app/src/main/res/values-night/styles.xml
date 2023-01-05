@@ -4,4 +4,10 @@
         <item name="android:background">@color/gray_600</item>
         <item name="exampleColor">@color/light_blue_600</item>
     </style>
+    <style name="Button.Green" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorAccent">#058300</item>
+    </style>
+    <style name="Button.Gray" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorAccent">@android:color/darker_gray</item>
+    </style>
 </resources>

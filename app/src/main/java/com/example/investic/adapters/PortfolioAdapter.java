@@ -1,22 +1,20 @@
 package com.example.investic.adapters;
 
 import android.content.Context;
-import android.text.Layout;
+import android.graphics.Color;
+import android.os.Debug;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
-
 import com.example.investic.R;
-import com.example.investic.ui.portfolio.CompanyPortfolioView;
-import com.example.investic.ui.portfolio.PortfolioFragment;
+import com.example.investic.data.model.Company;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class PortfolioAdapter extends BaseAdapter {
 
@@ -26,7 +24,7 @@ public class PortfolioAdapter extends BaseAdapter {
 
     //The general format in which values will be passed to the adapter.
     //Above variables kept for compatibility and modifiability.
-    ArrayList<HashMap<String, String>> companyList;
+    ArrayList<Company> companyList;
     LayoutInflater inflater;
     public PortfolioAdapter(Context c, String [] companyNameList, String [] companyCategoryList){
         this.context = c;
@@ -34,7 +32,7 @@ public class PortfolioAdapter extends BaseAdapter {
         this.companyCategoryList = companyCategoryList;
         this.inflater = LayoutInflater.from(c);
     }
-    public PortfolioAdapter(Context c, ArrayList<HashMap<String, String>> companyList){
+    public PortfolioAdapter(Context c, ArrayList<Company> companyList){
         this.context = c;
         this.companyList = companyList;
         this.inflater = LayoutInflater.from(c);
@@ -55,13 +53,39 @@ public class PortfolioAdapter extends BaseAdapter {
     @Override
     public View getView(int pos, View convertView, ViewGroup parent) {
         //initialise view
-        View cv = (View) inflater.inflate(R.layout.company_portfolio_view, null);
+        View cv = (View) inflater.inflate(R.layout.company_portfolio_cardview, null);
         //find the company name, category, score, image views from the company_portfolio_view.xml layout file.
         TextView cnv = cv.findViewById(R.id.company_name);
-        TextView ccv = cv.findViewById(R.id.company_category);
+        TextView ctv = cv.findViewById(R.id.company_ticker);
+        TextView ccv = cv.findViewById(R.id.company_sector);
+
+        TextView cspv = cv.findViewById((R.id.stock_price_value));
+        //Company Share Price Change Value
+        TextView cspcv = cv.findViewById(R.id.price_change_value);
+        TextView cesv = cv.findViewById((R.id.ethical_score_value));
         if (this.companyList != null && ! this.companyList.isEmpty()) {
-            cnv.setText(this.companyList.get(pos).get("CompanyName"));
-            ccv.setText(this.companyList.get(pos).get("CompanyCategory"));
+            cnv.setText(this.companyList.get(pos).getName());
+            ctv.setText(this.companyList.get(pos).getTickerSymbol());
+            ccv.setText(this.companyList.get(pos).getSector());
+            cspv.setText('$' + String.valueOf(companyList.get(pos).getCurrentValue()));
+            Float netChange = this.companyList.get(pos).getNetChange();
+
+            String netChangeStr = String.valueOf(netChange);
+            // <0, red; > 0, green; 0, gray.
+            if(netChange < 0){
+                cspcv.setText(netChangeStr);
+                cspcv.setTextColor(Color.RED);
+            }
+            else if(netChange > 0)
+            {
+                cspcv.setText("+" + netChangeStr);
+                cspcv.setTextColor(Color.parseColor("#32a852"));
+            }
+            else{
+                cspcv.setTextColor(Color.LTGRAY);
+            }
+
+            cesv.setText(String.valueOf(this.companyList.get(pos).getEthicalScore()));
         }
         return cv;
     }

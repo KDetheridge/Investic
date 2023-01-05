@@ -9,7 +9,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-        <string name="action_profile">Profile</string>
+    <string name="action_profile">Profile</string>
     <string name="username">Kieran</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -23,7 +23,9 @@
     <string name="prompt_investment_risk">1 - Very Low Risk, 5 - Very High Risk</string>
     <string name="invalid_number">Invalid Number! Please enter a number.</string>
     <string name="invalid_number_between_1_5">Invalid Number! Please enter a number between 1 and 5.</string>
-
+    <string name="no_results">No Results.</string>
+    <string name="profit_color">#32a852</string>
+    <string name="add_portfolio_text">Add to Portfolio</string>
     <string-array name="investment_risk_levels">
         <item>1 - Very Low Risk</item>
         <item>2 - Low Risk</item>

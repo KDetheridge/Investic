@@ -29,6 +29,8 @@ android {
         viewBinding true
     }
     namespace 'com.example.investic'
+
+
 }
 
 dependencies {

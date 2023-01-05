@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.investic.MainActivity;
 import com.example.investic.R;
+import com.example.investic.data.LoginRepository;
 import com.example.investic.databinding.ActivityLoginBinding;
 import com.example.investic.profile.ProfileConfigActivity;
 import com.example.investic.ui.login.LoginViewModel;
@@ -145,8 +146,9 @@ public class LoginActivity extends AppCompatActivity {
                 Boolean res = loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());
                 if(res){
+                    int userID = LoginRepository.getLoggedInUser().getUserId();
                     //Profile already configured
-                    if (loginViewModel.isProfileConfigured(emailEditText.getText().toString())){
+                    if (loginViewModel.isProfileConfigured(userID)){
                         //redirect to main activity
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);

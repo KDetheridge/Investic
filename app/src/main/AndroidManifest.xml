@@ -12,7 +12,8 @@
         android:theme="@style/Theme.Investic">
         <activity
             android:name=".profile.ProfileConfigActivity"
-            android:exported="false">
+            android:exported="false"
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -39,7 +40,8 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Investic.NoActionBar" />
+            android:theme="@style/Theme.Investic.NoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".BaseActivity"
             android:exported="false" />

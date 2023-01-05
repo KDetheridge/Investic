@@ -139,9 +139,9 @@ public class LoginViewModel extends ViewModel {
         return false;
     }
 
-    public boolean isProfileConfigured(String email){
+    public boolean isProfileConfigured(int userID){
         DBHelper db = new DBHelper(context);
-        return db.isProfileConfigured(email);
+        return db.isProfileConfigured(userID);
     }
 
     private boolean isEmailUnique(String email){

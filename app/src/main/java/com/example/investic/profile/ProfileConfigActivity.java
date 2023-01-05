@@ -37,7 +37,7 @@ public class ProfileConfigActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_config);
         binding = ActivityProfileConfigBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //get existing or create new LoginViewModel object
+        //get existing or create new ProfileConfigModel object
         profileConfigModel = new ProfileConfigModel(getApplicationContext());
 
         final EditText amtEditText = binding.investmentAmount;
@@ -101,9 +101,9 @@ public class ProfileConfigActivity extends AppCompatActivity {
         riskEditText.addTextChangedListener(afterTextChangedListener);
         scrutinyEditText.addTextChangedListener(afterTextChangedListener);
 
-        submitButton.setOnClickListener((new View.OnClickListener(){
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View view) {
                 String amt = amtEditText.getText().toString();
                 String dur = durationEditText.getText().toString();
                 String ris = riskEditText.getText().toString();
@@ -122,7 +122,7 @@ public class ProfileConfigActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
-        }));
+        });
     }
 
 

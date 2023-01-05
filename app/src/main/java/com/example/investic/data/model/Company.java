@@ -1,35 +1,79 @@
 package com.example.investic.data.model;
 
 public class Company {
-    private int id;
     private String name;
-    private String shortDesc;
-    private String longDesc;
+    private String tickerSymbol;
+    private String sector;
     private float currentValue;
+    private float netChange;
+    private int ethicalScore;
+    private boolean inPortfolio;
 
-    public Company(int id, String name, String shortDesc, String longDesc, float currentValue){
-        this.id = id;
+
+    public Company(String name, String tickerSymbol, String sector,  float currentValue, float netChange, int ethicalScore){
         this.name = name;
-        this.shortDesc = shortDesc;
-        this.longDesc = longDesc;
+        this.sector = sector;
+        this.tickerSymbol = tickerSymbol;
         this.currentValue = currentValue;
+        this.netChange = netChange;
+        this.ethicalScore = ethicalScore;
+    }
+    public Company(){
+
     }
 
-    public int getId() {
-        return this.id;
-    }
 
     public String getName(){
         return this.name;
     }
-    public String getShortDesc(){
-        return this.shortDesc;
+
+    public void setName(String name){
+        this.name = name;
     }
-    public String getLongDesc(){
-        return this.longDesc;
+    public String getTickerSymbol() {
+        return this.tickerSymbol;
+    }
+    public void setTickerSymbol(String tickerSymbol){
+        this.tickerSymbol = tickerSymbol;
+    }
+
+    public String getSector() {
+        return this.sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
     }
 
     public float getCurrentValue(){
         return this.currentValue;
+    }
+
+    public void setCurrentValue(float currentValue) {
+        this.currentValue = currentValue;
+    }
+
+    public float getNetChange(){
+        return this.netChange;
+    }
+
+    public void setNetChange(float netChange) {
+        this.netChange = netChange;
+    }
+
+    public int getEthicalScore() {
+        return this.ethicalScore;
+    }
+
+    public void setEthicalScore(int ethicalScore) {
+        this.ethicalScore = ethicalScore;
+    }
+
+    public boolean isInPortfolio() {
+        return this.inPortfolio;
+    }
+
+    public void setInPortfolio(boolean inPortfolio) {
+        this.inPortfolio = inPortfolio;
     }
 }

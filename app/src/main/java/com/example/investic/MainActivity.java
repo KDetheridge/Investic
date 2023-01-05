@@ -1,9 +1,13 @@
 package com.example.investic;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.investic.data.LoginRepository;
+import com.example.investic.data.model.Company;
+import com.example.investic.profile.ProfileConfigActivity;
 import com.example.investic.profile.ProfileFragment;
+import com.example.investic.ui.home.HomeFragment;
 import com.example.investic.ui.portfolio.PortfolioFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,19 +40,30 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //Get the user instance from the LoginRepository
+        Integer uID =  LoginRepository.getLoggedInUser().getUserId();
+        DBHelper db = new DBHelper(getApplicationContext());
 
+        //if the profile has not yet been configured for this user
+        if(!db.isProfileConfigured(uID)){
+            //create a new intent and redirect to the Profile Config activity.
+            Intent i = new Intent(getApplicationContext(), ProfileConfigActivity.class);
+            startActivity(i);
+            finish();
+        }
+        else{
+            //Set the default view to the portfolio fragment.
+            replaceFragment(new PortfolioFragment());
+        };
         setSupportActionBar(binding.toolbar);
 
-        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        //appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()){
 
                 case R.id.home:
-                    //replaceFragment(new HomeFragment());
+                    replaceFragment(new HomeFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());
@@ -62,32 +77,17 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-//        binding.fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
     }
+
     private void replaceFragment(Fragment f){
         FragmentManager fm = getSupportFragmentManager();
         FrameLayout fl = (FrameLayout) findViewById(R.id.frameLayout);
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.frameLayout,f);
         ft.commit();
-//        if(f instanceof PortfolioFragment){
-//            FrameLayout rootLayout = (FrameLayout) findViewById(android.R.id.content);
-//            FrameLayout linearLayout1 = (FrameLayout) fl.findViewById(R.id.fragment_portfolio);
-//            LinearLayout portfLinLayout = (LinearLayout) linearLayout1.findViewById(R.id.linear_layout);
-//            //portfLinLayout.addView(new CompanyPortfolioView(this));
-//            View.inflate(this, R.layout.company_portfolio_view, portfLinLayout);
-//            View.inflate(this, R.layout.company_portfolio_view, portfLinLayout);
-//            View.inflate(this, R.layout.company_portfolio_view, portfLinLayout);
-//        }
         Log.d("Fragment replaced",f.toString());
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -95,42 +95,46 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public ArrayList<HashMap<String,String>> getPortfolioDetails(){
+    /*
+     * Access the database associated with this app and get the current user portfolio details
+     * including company details.
 
+     */
+    public ArrayList<Company> getPortfolioDetails(){
         Integer uID =  LoginRepository.getLoggedInUser().getUserId();
         DBHelper db = new DBHelper(getApplicationContext());
         return db.getPortfolio(uID);
     }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//
-//            return true;
-//        }
-//        if(id == R.id.action_profile){
-//
-//            Intent intent = new Intent(getApplicationContext(),ProfileFragment.class);
-//            Fragment fragment = new ProfileFragment();
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.fragment_container, fragment);
-//            fragmentTransaction.addToBackStack(null);
-//            fragmentTransaction.commit();
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        return NavigationUI.navigateUp(navController, appBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
+
+    //Access the database associated with this app and get the current user profile details
+    public HashMap<String,Integer> getProfile(){
+        Integer uID =  LoginRepository.getLoggedInUser().getUserId();
+        DBHelper db = new DBHelper(getApplicationContext());
+        return db.getProfile(uID);
+    }
+    /*
+     * Access the database associated with this app and get all details for all companies.
+     * Used in the home view for the list of companies
+
+     */
+
+    public ArrayList<Company> getAllCompanies(){
+        Integer uID =  LoginRepository.getLoggedInUser().getUserId();
+        DBHelper db = new DBHelper(getApplicationContext());
+        return db.getAllCompanies(uID);
+    }
+
+    /*
+    * Access the database associated with this app and get all details for all with a
+    * ticker symbol or name matching the searchTerm
+    * @param searchTerm the term to look for in the CompanyTicker and CompanyName of the Company table.
+    * */
+    public ArrayList<Company> searchCompanies(String searchTerm){
+        Integer uID =  LoginRepository.getLoggedInUser().getUserId();
+        System.out.println("SEARCH TERM: " + searchTerm);
+        DBHelper db = new DBHelper(getApplicationContext());
+        return db.getCompaniesByPartialMatch(searchTerm,uID);
+    }
+
 }
+

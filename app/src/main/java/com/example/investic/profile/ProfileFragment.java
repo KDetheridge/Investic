@@ -6,16 +6,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.investic.MainActivity;
 import com.example.investic.R;
 import com.example.investic.databinding.ActivityMainBinding;
 import com.example.investic.databinding.FragmentProfileBinding;
+
+import java.util.HashMap;
+
+import db.DBHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,24 +71,48 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        updateProfileButton = binding.updateProfileButton;
 
-        updateProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Not yet implemented.",Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getContext(), ProfileConfigActivity.class);
-//                startActivity(intent);
-//                getContext().finish();
-            }
-        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        //Get the relevant text views and populate them from the database profile record for this user.
+        TextView isv = rootView.findViewById(R.id.investmentScrutinyValue);
+        TextView iav = rootView.findViewById(R.id.investmentAmountValue);
+        TextView irv = rootView.findViewById(R.id.investmentRiskValue);
+        MainActivity a = (MainActivity) getActivity();
+        HashMap<String,Integer> profile = a.getProfile();
+        if (!profile.isEmpty()){
+            String scrutiny = String.valueOf(profile.get("InvestmentScrutinyLevel"));
+            String risk = String.valueOf(profile.get("InvestmentRiskLevel"));
+            String amount = String.valueOf(profile.get("InvestmentAmount"));
+
+            isv.setText(scrutiny);
+            irv.setText(risk);
+            iav.setText(amount);
+
+
+        }
+
+        //set the onClick activity for the updateProfileButton. Redirects to the ProfileConfigActivity.
+        updateProfileButton = rootView.findViewById(R.id.updateProfileButton);
+        updateProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"Not yet implemented.",Toast.LENGTH_SHORT).show();
+                MainActivity a = (MainActivity) getActivity();
+                Intent intent = new Intent(getActivity(), ProfileConfigActivity.class);
+                startActivity(intent);
+
+
+
+            }
+        });
+
+        return rootView;
 
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){

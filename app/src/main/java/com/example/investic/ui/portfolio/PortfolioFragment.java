@@ -20,6 +20,7 @@ import com.example.investic.MainActivity;
 import com.example.investic.R;
 import com.example.investic.adapters.PortfolioAdapter;
 import com.example.investic.data.LoginRepository;
+import com.example.investic.data.model.Company;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,21 +83,17 @@ public class PortfolioFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_portfolio, container, false);
         listView = (ListView) rootView.findViewById(R.id.company_list_view);
         MainActivity a = (MainActivity) getActivity();
-        ArrayList<HashMap<String,String>> portfolioCompanies = a.getPortfolioDetails();
+        ArrayList<Company> portfolioCompanies = a.getPortfolioDetails();
         if( portfolioCompanies == null){
 
             Toast toast = Toast.makeText(getContext(),"No companies in your portfolio. Add some and return to this page!", Toast.LENGTH_LONG);
             toast.show();
             return rootView;
         }
-//        PortfolioAdapter adapter = new PortfolioAdapter(getContext(),
-//                                            new String[]{"Capgemini","Tim Hortons","Dogmans Enterprise"}, new String[]{"Technology Consulting","Food","Content Creation"});
         //ArrayList implementation
         PortfolioAdapter adapter = new PortfolioAdapter(getContext(),portfolioCompanies);
         listView.setAdapter(adapter);
         return rootView;
-
-
 
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
