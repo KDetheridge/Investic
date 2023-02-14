@@ -84,11 +84,11 @@ public class ProfileFragment extends Fragment {
         TextView iav = rootView.findViewById(R.id.investmentAmountValue);
         TextView irv = rootView.findViewById(R.id.investmentRiskValue);
         MainActivity a = (MainActivity) getActivity();
-        HashMap<String,Integer> profile = a.getProfile();
+        HashMap<String,Double> profile = a.getProfile();
         if (!profile.isEmpty()){
-            String scrutiny = String.valueOf(profile.get("InvestmentScrutinyLevel"));
-            String risk = String.valueOf(profile.get("InvestmentRiskLevel"));
-            String amount = String.valueOf(profile.get("InvestmentAmount"));
+            String scrutiny = String.format("%.0f",profile.get("InvestmentScrutinyLevel"));
+            String risk = String.format("%.0f",profile.get("InvestmentRiskLevel"));
+            String amount = String.format("%.2f",profile.get("InvestmentAmount"));
 
             isv.setText(scrutiny);
             irv.setText(risk);

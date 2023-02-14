@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             //Set the default view to the portfolio fragment.
-            replaceFragment(new PortfolioFragment());
+            replaceFragment(new HomeFragment());
         };
         setSupportActionBar(binding.toolbar);
 
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Access the database associated with this app and get the current user profile details
-    public HashMap<String,Integer> getProfile(){
+    public HashMap<String,Double> getProfile(){
         Integer uID =  LoginRepository.getLoggedInUser().getUserId();
         DBHelper db = new DBHelper(getApplicationContext());
         return db.getProfile(uID);

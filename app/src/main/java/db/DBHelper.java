@@ -17,6 +17,7 @@ import com.example.investic.data.model.Company;
 import com.example.investic.data.model.CompanyArticle;
 import com.example.investic.data.model.User;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -367,11 +368,28 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Integer labelIdx = c.getColumnIndex(columnName);
         if (labelIdx >= 0){
-            return c.getString(labelIdx);
+            //As per https://developer.android.com/reference/android/database/Cursor#FIELD_TYPE_FLOAT
+            switch (c.getType(labelIdx)) {
+                //Int
+                case 1:
+                    return String.valueOf(c.getInt(labelIdx));
+                //Float
+                case 2:
+                    DecimalFormat df = new DecimalFormat("#");
+                    df.setMaximumFractionDigits(2);
+                    return String.format("%.2f",c.getFloat(labelIdx));
+                //String
+                case 3:
+                    return c.getString(labelIdx);
+                //Blob
+                case 4:
+                    return String.valueOf(c.getBlob(labelIdx));
+
+            }
         }
-        else{
-            return null;
-        }
+
+        //No valid column found
+        return null;
     }
 
     public boolean isProfileConfigured(int userID){
@@ -390,15 +408,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
 
     }
-    public HashMap<String, Integer> getProfile(Integer userID){
-        HashMap<String, Integer> profile = new HashMap<>();
+    public HashMap<String, Double> getProfile(Integer userID){
+        HashMap<String, Double> profile = new HashMap<>();
         String userIDStr = String.valueOf(userID);
         Cursor c = db.rawQuery("SELECT * FROM profile WHERE UserID = ? ", new String[]{userIDStr});
         c.moveToPosition(0);
-        Integer scrutiny = Integer.valueOf(getDbValue(c, "InvestmentScrutinyLevel"));
-        Integer risk = Integer.valueOf(getDbValue(c, "InvestmentRiskLevel"));
-        Integer amount = Integer.valueOf(getDbValue(c, "InvestmentAmount"));
-        Integer duration = Integer.valueOf(getDbValue(c, "InvestmentDurationMonths"));
+        Double scrutiny = Double.valueOf(getDbValue(c, "InvestmentScrutinyLevel"));
+        Double risk = Double.valueOf(getDbValue(c, "InvestmentRiskLevel"));
+        Double amount = Double.valueOf(getDbValue(c, "InvestmentAmount"));
+        Double duration = Double.valueOf(getDbValue(c, "InvestmentDurationMonths"));
 
         profile.put("InvestmentScrutinyLevel",scrutiny);
         profile.put("InvestmentRiskLevel",risk);
